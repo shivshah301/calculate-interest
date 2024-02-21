@@ -43,7 +43,8 @@ export class CalculateInterestComponent implements OnInit{
     });
   
     // Add the new form group to the FormArray
-    this.items.push(item);
+    // this.items.push(item);
+    this.items.unshift(item);
   }
   
   // Helper method to get the 'items' FormArray
