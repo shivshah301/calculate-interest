@@ -4,7 +4,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-calculate-interest',
@@ -23,88 +23,99 @@ export class CalculateInterestComponent implements OnInit{
   today = new Date();
   compoundInterest!: number;
   amount!: number;
-
+  count = 1;
+  totalInterest:number = 0;
+  totalAmount:number = 0;
 
   constructor(private snackBar: MatSnackBar, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.myForm = this.fb.group({
       items: this.fb.array([
-        
+        this.createItems()
       ]) // Initialize an empty FormArray
     });
-    this.addItems();
+   // this.addItems();
+  }
+
+  createItems(): FormGroup {
+    return this.fb.group({
+      fPrincipal: [100, Validators.required],
+      fRate: [10, [Validators.required, Validators.min(1)]],
+      fDate: ['', [Validators.required, Validators.min(1)]],
+      count: [this.count],
+      ci: [0],
+      compoundAmount: [0],
+    })
   }
   addItems() {
+    if (!this.items.valid) {
+      return;
+    }
+  
+
+    for(let k=0;k<this.count;k++) {
+      if ((<FormArray>this.myForm.get('items')).controls[k].invalid) {
+        return;
+      }
+    }
     const item = this.fb.group({
       fPrincipal: [100, Validators.required],
       fRate: [10, [Validators.required, Validators.min(1)]],
       fDate: ['', [Validators.required, Validators.min(1)]],
+      count: [this.count],
+      ci: [0],
+      compoundAmount: [0],
     });
   
     // Add the new form group to the FormArray
     // this.items.push(item);
-    this.items.unshift(item);
+    this.count = this.count + 1;
+    this.items.controls.unshift(item);
+  }
+
+  getValidity(index: number) {
+    return (<FormArray>this.myForm.get('items')).controls[index].invalid;
   }
   
   // Helper method to get the 'items' FormArray
   get items() {
-    return (<FormArray>this.myForm.get('items')).controls;
-  }
+    return (<FormArray>this.myForm.get('items'));
+  }  
 
-  calculateInterest() {
-    if (this.date > this.today) {
-      console.log('Date cannot be greater than today');
+ 
+
+  deleteItem(idx: number) {
+    if (this.count < 2) {
       return;
     }
-    console.log(this.principal);
-    console.log(this.rate);
-    console.log(this.date);
+	//	this.items.removeAt(idx);
+    const control = <FormArray>this.myForm.get('items');
+    control.removeAt(idx);
+    this.count = this.count - 1;
 
-    const days = this.getDiferenceInDays(this.date);
-    const time = this.convertDaysToYear(days);
-    let A = this.principal * Math.pow(1 + this.rate / 100, time);
-
-    console.log('Amount : ', A);
-    console.log('Interest : ', A - this.principal);
-
-    this.snackBar.open('Completed interest calculation!!', 'Great', {
+    this.snackBar.open('Deleted', 'GrOopseat', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 5000
+      duration: 5000,
+      panelClass: ['snackbarError']
     });
-  }
+	}
 
-  getDiferenceInDays(thenDate: Date): number {
-    // -1 to reduce current day to change interest till yesterday
-    // thenDate.setDate(thenDate.getDate() - 1);
-    const previousDay = new Date();
-    previousDay.setDate(previousDay.getDate() - 1);
+  calculateEachInterest(item: any, index:number) {
 
-    // console.log(
-    //   Math.round(
-    //     Math.abs(thenDate.getTime() - previousDay.getTime()) /
-    //       (1000 * 60 * 60 * 24)
-    //   )
-    // );
+    for(let k=0;k<this.count;k++) {
+      if ((<FormArray>this.myForm.get('items')).controls[k].invalid) {
+        this.snackBar.open('Please fill mandatory fields', 'Oops', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000,
+          panelClass: ['snackbarError']
+        });
+        return;
+      }
+    }
 
-    // console.log(
-    //   Math.abs(thenDate.getTime() - previousDay.getTime()) /
-    //     (1000 * 60 * 60 * 24)
-    // );
-
-    return (
-      Math.abs(thenDate.getTime() - previousDay.getTime()) /
-      (1000 * 60 * 60 * 24)
-    );
-  }
-
-  convertDaysToYear(days: number) {
-    console.log('Year', days / 365);
-    return days / 365;
-  }
-
-  calculateEachInterest(item: any) {
     const fPrincipal = item.controls.fPrincipal.value;
     const fDate = item.controls.fDate.value;
     const fRate = item.controls.fRate.value;
@@ -123,11 +134,44 @@ export class CalculateInterestComponent implements OnInit{
     console.log('Amount : ', A);
     console.log('Interest : ', A - fPrincipal);
 
+  let taskListArrays = this.myForm.get('items') as FormArray;
+        
+taskListArrays.controls[index].patchValue({"compoundAmount":A});
+taskListArrays.controls[index].patchValue({"ci": A - fPrincipal});
+
+ //this.items[index].patchValue(actorsForm);
+ console.log(this.items);
+
     this.snackBar.open('Completed interest calculation!!', 'Great', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
       duration: 5000
     });
+
+    this.calculateTotal(item);
+  }
+
+  getDiferenceInDays(thenDate: Date): number {
+    // -1 to reduce current day to change interest till yesterday
+    // thenDate.setDate(thenDate.getDate() - 1);
+    const previousDay = new Date();
+    previousDay.setDate(previousDay.getDate() - 1);
+
+    return (
+      Math.abs(thenDate.getTime() - previousDay.getTime()) /
+      (1000 * 60 * 60 * 24)
+    );
+  }
+
+  convertDaysToYear(days: number) {
+    console.log('Year', days / 365);
+    return days / 365;
+  }
+
+  calculateTotal(item: any) {
+
+    this.totalInterest = this.totalInterest + item.controls.ci.value;
+    this.totalAmount = this.totalAmount + item.controls.compoundAmount.value;
   }
 }
 
