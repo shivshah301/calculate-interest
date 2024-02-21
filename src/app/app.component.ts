@@ -1,25 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-root',
-  standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'calculate-interest';
@@ -29,6 +13,8 @@ export class AppComponent implements OnInit {
   today = new Date();
   compoundInterest!: number;
   amount!: number;
+  items = [];
+
 
   constructor() {}
 
@@ -57,18 +43,18 @@ export class AppComponent implements OnInit {
     const previousDay = new Date();
     previousDay.setDate(previousDay.getDate() - 1);
 
-    console.log(
-      Math.round(
-        Math.abs(thenDate.getTime() - previousDay.getTime()) /
-          (1000 * 60 * 60 * 24)
-      )
-    );
+    // console.log(
+    //   Math.round(
+    //     Math.abs(thenDate.getTime() - previousDay.getTime()) /
+    //       (1000 * 60 * 60 * 24)
+    //   )
+    // );
 
-    console.log(
-      Math.abs(thenDate.getTime() - previousDay.getTime()) /
-        (1000 * 60 * 60 * 24)
-    );
-    
+    // console.log(
+    //   Math.abs(thenDate.getTime() - previousDay.getTime()) /
+    //     (1000 * 60 * 60 * 24)
+    // );
+
     return (
       Math.abs(thenDate.getTime() - previousDay.getTime()) /
       (1000 * 60 * 60 * 24)
