@@ -1,0 +1,41 @@
+.section-main {
+    margin: 0 auto;
+}
+
+.add-icon-img:hover {
+    border: 6px solid greenyellow;
+    border-radius: 20px;
+}
+
+.new-card {
+    margin-top: 20px;
+}
+
+.card-division {
+    display: flex;
+}
+
+.add-icon-img {
+    border-radius: 20px;
+}
+
+.card-header-section {
+    display: flex;
+}
+
+.snackbarError {
+    background-color: rgb(255, 0, 0);
+  }
+
+  .form-element {
+    margin-top: 10px;
+  }
+
+  .choose-date {
+    width: 100%;
+  }
+
+  svg:hover {
+    fill: brown;
+    cursor: pointer;
+  }

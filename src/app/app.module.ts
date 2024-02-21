@@ -12,12 +12,14 @@ import {MatIconModule} from '@angular/material/icon';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { CalculateInterestComponent } from './calculate-interest/calculate-interest.component';
+import { CalculateInterestObjectComponent } from './calculate-interest-object/calculate-interest-object.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalculateInterestComponent
+    CalculateInterestComponent,
+    CalculateInterestObjectComponent
   ],
   imports: [
     BrowserModule,
