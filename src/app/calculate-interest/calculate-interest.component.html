@@ -1,4 +1,4 @@
-<div class="jumbotron col-sm-8 section-main">
+<div class="jumbotron col-sm-8 col-md-8 col-lg-8 section-main">
     <h1 class="display-4">Calculate Interest!</h1>
     <h1 class="display-3" (click)="addItems()">Add item(s) <img class="add-icon-img" src="../assets/plus-primary.jpg" width="40" height="40"/></h1>
     <hr class="my-4">
@@ -9,9 +9,9 @@
       <ng-container formArrayName="items">
         <ng-container *ngFor="let item of items; let i = index" [formGroupName]="i">
 
-    <div class="row" >
+    <div class="row new-card" >
 
-      <div class="col-sm-8">
+      <div class="col-sm-10 col-md-10 col-lg-10">
         <div class="card">
           <div class="card-body">
             

@@ -37,7 +37,7 @@ export class CalculateInterestComponent implements OnInit{
   }
   addItems() {
     const item = this.fb.group({
-      fPrincipal: [0, Validators.required],
+      fPrincipal: [100, Validators.required],
       fRate: [10, [Validators.required, Validators.min(1)]],
       fDate: ['', [Validators.required, Validators.min(1)]],
     });
