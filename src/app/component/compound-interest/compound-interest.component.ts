@@ -6,11 +6,11 @@ import {
 } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-calculate-interest-object',
-  templateUrl: './calculate-interest-object.component.html',
-  styleUrl: './calculate-interest-object.component.scss'
+  selector: 'app-compound-interest',
+  templateUrl: './compound-interest.component.html',
+  styleUrl: './compound-interest.component.scss'
 })
-export class CalculateInterestObjectComponent implements OnInit{
+export class CompoundInterestComponent implements OnInit{
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
