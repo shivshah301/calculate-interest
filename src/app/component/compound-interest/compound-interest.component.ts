@@ -192,22 +192,20 @@ export class CompoundInterestComponent implements OnInit {
   }
 
   resetPrincipalCard(index: number) {
-    this.formData[index] = {
-      principal: 100,
-      rate: 10,
-      date: new Date(),
-      fromDate: new Date(),
-      toDate: new Date(),
-      compoundInterest: 0,
-      compoundAmount: 0,
-      noOfDays: 0,
-      id: 1,
-      calc: false,
-      activeRecord: false,
-      simpleInterest: 0,
-      simpleAmount: 0,
-      timeInYears: 0
-    };
+    this.formData[index].principal = 100;
+    this.formData[index].rate = 10;
+    this.formData[index].date = new Date();
+    this.formData[index].fromDate = new Date();
+    this.formData[index].toDate = new Date();
+    this.formData[index].compoundInterest = 0;
+    this.formData[index].compoundAmount = 0;
+    this.formData[index].noOfDays = 0;
+    this.formData[index].calc = false;
+    this.formData[index].activeRecord = false;
+    this.formData[index].simpleInterest = 0;
+    this.formData[index].simpleAmount = 0;
+    this.formData[index].timeInYears = 0;
+  
     this.calculateTotalHead();
   }
 
