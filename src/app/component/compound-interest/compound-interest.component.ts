@@ -151,6 +151,9 @@ export class CompoundInterestComponent implements OnInit {
       return;
     }
     this.formData.splice(index, 1);
+    this.formData.forEach((x:any, index: number) => {
+      x.id =  this.formData.length - index;
+    });
     this.calculateTotalHead();
 
   }
