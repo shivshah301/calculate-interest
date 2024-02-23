@@ -1,196 +1,167 @@
+   
+  <mat-card class="example-card">
+    <mat-card-content>
+      <div class="d-flex">
+        <div class="col-sm-9 col-md-9 col-lg-9">
+          <h1 class="display-3">Add item(s) <img (click)="addItem()" class="add-icon-img"
+              src="../assets/plus-primary.jpg" width="40" height="40" /></h1>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 d-flex">
+          <button class="btn-200" mat-raised-button color="primary" (click)="resetAll()">Reset All</button>
 
+          <button class="mx-1 btn-200" (click)="saveAll()" mat-raised-button color="primary"
+            [disabled]="!totalInterest && !totalAmount">Save</button>
+        </div>
+      </div>
 
+      <p>Total amount: {{totalAmount | number : '1.2-5'}}</p>
+      <p>Total interest: {{totalInterest | number : '1.2-5'}}</p>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button class="btn-200" mat-raised-button color="primary">Reset All</button>
 
-<div class="jumbotron col-sm-8 col-md-8 col-lg-8 section-main">
-    <h1 class="display-3" >Add item(s) <img (click)="addItem()"  class="add-icon-img" src="../assets/plus-primary.jpg"
-        width="40" height="40" /></h1>
-  
-        <h2>
-          Total interest:  {{totalInterest | number : '1.2-2'}}
-        </h2>
-        <h2>
-          Total amount:    {{totalAmount | number : '1.2-2'}}
-        </h2>
-    <hr class="my-4">
-  
-  
-  
-        <ng-container  *ngFor="let item of formData;let i=index">
-  
-          <div class="row new-card">
-  
-            <div class="col-sm-12 col-md-12 col-lg-12">
-              <div class="card card-main">
-                <div class="card-header card-header-section">
-                  <div class="col-sm-10 col-md-10 col-lg-10">
-                    S.No  {{item.id}}
-                  </div>
-                  <div class="col-sm-2 col-md-2 col-lg-2" >
-                    <svg (click)="removeItem(item, i)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                    </svg>
-  
-                  </div>
-                 
-                </div>
-                <div class="card-body card-division">
-  
-                  <div class="first-body col-sm-9 col-md-9 col-lg-9 p-1">
-                    <div class="form-group row form-element">
-                      <div class="col-sm-3">
-                        <label for="pamount" class="col-form-label">Principal Amount</label>
-                      </div>
-                      <div class="col-sm-6">
-                        <input id="pamount" name="fPrincipal" class="form-control form-control-lg" type="number"
-                          placeholder="principal amount" [(ngModel)]="item.principal">
-                      </div>
-                    </div>
-  
-  
-                    <div class="form-group row form-element">
-                      <div class="col-sm-3">
-                        <label for="date" class="col-form-label">Date</label>
-                      </div>
-  
-                      <div class="col-sm-6">
-                        <mat-form-field class="choose-date">
-                          <mat-label>Choose a date</mat-label>
-                          <input matInput [matDatepicker]="picker" [max]="today" name="fDate" [(ngModel)]="item.date">
-                          <mat-hint>MM/DD/YYYY </mat-hint>
-                          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                      </div>
-                    </div>
-  
-  
-                    <div class="form-group row form-element">
-                      <label for="rate" class="col-sm-3 col-form-label">Rate</label>
-                      <div class="col-sm-6">
-                        <input id="rate" name="fRate" class="form-control form-control-lg" type="number"
-                          placeholder="rate %" [(ngModel)]="item.rate">
-                      </div>
-                    </div>
-  
-                    <button  class="btn btn-primary" (click)="calculate(i)">Calculate</button>
-                  </div>
-  
-                  <div class="second-body col-sm-3 col-md-3 col-lg-3">
-                    <div class="jumbotron jumbotron-fluid">
-                      <div class="container">
-                        
-                      
-                            Compound Interest:  
-                            <div class="card-body">{{item.compoundInterest  | number : '1.2-2'}}
-                            </div>
-                            
-                     
-  
-                       
-                          Total Amount :
-
-                          <div class="card-body">{{item.compoundAmount  | number : '1.2-2'}}
-                          </div> 
-                      </div>
-                    </div>
-                  </div>  
-                </div>  
-              </div>
-            </div>  
-          </div>
-        </ng-container>  
-  </div>
+      <button class="mx-1 btn-200" mat-raised-button color="primary">Save</button>
+    </mat-card-actions> -->
+    <mat-card-footer>
+      <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+    </mat-card-footer>
+  </mat-card>
 
   <div class="p-4">
-    <ng-container  *ngFor="let item of formData;let i=index">
-    <div class="mt-2 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
+    <div *ngFor="let item of formData;let i=index" class="">
+      <div class="mt-2 col-sm-12 col-md-12 col-lg-12" style="display: flex;">
         <div class="col-sm-8 col-md-8 col-lg-8">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Add principal details</mat-card-title>
-                  <mat-card-subtitle>Start</mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                   
-                        <div class="form-group row form-element">
-                          <div class="col-sm-3">
-                            <label for="pamount" class="col-form-label">Principal Amount</label>
-                          </div>
-                          <div class="col-sm-6">
-                            <input id="pamount" name="fPrincipal" class="form-control form-control-lg" type="number"
-                              placeholder="principal amount" [(ngModel)]="item.principal">
-                          </div>
-                        </div>
-      
-      
-                        <div class="form-group row form-element">
-                          <div class="col-sm-3">
-                            <label for="date" class="col-form-label">Date</label>
-                          </div>
-      
-                          <div class="col-sm-6">
-                            <mat-form-field class="choose-date">
-                              <mat-label>Choose a date</mat-label>
-                              <input matInput [matDatepicker]="picker" [max]="today" name="fDate" [(ngModel)]="item.date">
-                              <mat-hint>MM/DD/YYYY </mat-hint>
-                              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                              <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                          </div>
-                        </div>
-      
-      
-                        <div class="form-group row form-element">
-                          <label for="rate" class="col-sm-3 col-form-label">Rate</label>
-                          <div class="col-sm-6">
-                            <input id="rate" name="fRate" class="form-control form-control-lg" type="number"
-                              placeholder="rate %" [(ngModel)]="item.rate">
-                          </div>
-                        </div>
+          <mat-card  [ngClass]="{'calc-card': item.calc, 'ncalc-card' : showUncalculatedTransError && !item.calc  }">
+            <mat-card-header style="display: block;">
+              <mat-card-title>
 
-                </mat-card-content>
 
-                <mat-card-actions>
-                  <button mat-button (click)="calculate(i)">Calculate</button>
-                  <button mat-button>Reset</button>
-                </mat-card-actions>
-              </mat-card>
+
+
+                <div class="d-flex">
+                  <div class="col-sm-11 col-md-11 col-lg-11">
+                    Transaction no: {{item.id}}
+                  </div>
+                  <div class="col-sm-1 col-md-1 col-lg-1">
+
+                    <button mat-mini-fab color="primary" (click)="removeItem(item, i)"
+                      aria-label="Example icon button with a delete icon">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+
+
+
+
+              </mat-card-title>
+              <!-- <mat-card-subtitle>Start</mat-card-subtitle> -->
+            </mat-card-header>
+            <mat-card-content>
+
+
+              <div class="form-group row form-element">
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  <label for="pamount" class="col-form-label">Principal Amount</label>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Principal amount</mat-label>
+                    <input matInput type="number" [(ngModel)]="item.principal" #principalAmount maxlength="10"
+                      placeholder="Principal amount">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{principalAmount.value.length}}/10</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  <label for="pamount" class="col-form-label">Rate of Interest %</label>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Rate of Interest %</mat-label>
+                    <input type="number" [(ngModel)]="item.rate" matInput #rateofint maxlength="3"
+                      placeholder="Rate of Interest %">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                    <mat-hint align="end">{{rateofint.value.length}}/10</mat-hint>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+              <!-- calendar section -->
+              <div class="form-group row form-element">
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  <label for="pamount" class="col-form-label">From Date</label>
+                  <mat-form-field class="choose-date">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker"  name="fromDate" [(ngModel)]="item.fromDate">
+                    <mat-hint>MM/DD/YYYY </mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                  <label for="pamount" class="col-form-label">To Date</label>
+                  <mat-form-field class="choose-date">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker2" name="toDate" [(ngModel)]="item.toDate">
+                    <mat-hint>MM/DD/YYYY </mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <button class="btn-200" mat-raised-button color="primary" (click)="calculate(i)">Calculate</button>
+              <!-- <button class="btn-200 mx-1" mat-raised-button color="primary">Reset</button> -->
+            </mat-card-actions>
+          </mat-card>
         </div>
         <div class="mx-2 col-sm-4 col-md-4 col-lg-4">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title>Result</mat-card-title>
-                  <mat-card-subtitle>Start</mat-card-subtitle>
-                </mat-card-header>
-
-                <mat-card-content>
-                    <div class="container">
-                        
-                      
-                        Compound Interest:  
-                        <div class="card-body">{{item.compoundInterest  | number : '1.2-2'}}
-                        </div>
-                        
-                 
-
-                   
-                      Total Amount :
-
-                      <div class="card-body">{{item.compoundAmount  | number : '1.2-2'}}
-                      </div>
-
-                   
-
+          <mat-card class="height-100"  [ngClass]="{'calc-card': item.calc, 'ncalc-card' : showUncalculatedTransError && !item.calc  }">
+            <mat-card-header>
+              <mat-card-title>Result</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="form-group row">
+                    <span class="result-card"> <span>Compound Interest : </span>
+                      <span>{{item.compoundInterest  | number : '1.2-5'}}
+                      </span>
+                    </span>
                   </div>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-button>LIKE</button>
-                  <button mat-button>SHARE</button>
-                </mat-card-actions>
-              </mat-card>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group row">
+                    <span class="result-card"> <span>Total Amount : </span>
+                      <span>{{item.compoundAmount  | number : '1.2-5'}}
+                      </span>
+                    </span>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="form-group row">
+                    <span class="result-card"> <span>Time period: </span>
+                      <span>{{item.noOfDays }} </span>
+                    </span>
+                  </div>
+                </li>
+              </ul>             
+
+            </mat-card-content>
+            <mat-card-actions class="result-bottom ">
+              <button class="btn-200" mat-raised-button color="primary" (click)="resetPrincipalCard(i)">Reset</button>
+            </mat-card-actions>
+          </mat-card>
         </div>
+      </div>
     </div>
-    </ng-container>
-</div>
+  </div>
   <br>

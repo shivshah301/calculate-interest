@@ -39,3 +39,28 @@
     fill: brown;
     cursor: pointer;
   }
+
+  .btn-200 {
+    min-width: 100;
+  }
+
+  .height-100 {
+    height: 100%;
+  }
+
+ .result-card {
+  font-size: medium;
+ }
+
+ .result-bottom {
+  position: absolute;
+    bottom: 0;
+ }
+
+ .calc-card {
+  border: 2px solid green;
+ }
+
+ .ncalc-card {
+  border: 2px solid rgb(224, 59, 59);
+ }
